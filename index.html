@@ -4,18 +4,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Agri-Glow: Grow Smarter. Harvest Better.</title>
-    <!-- Tailwind CSS CDN -->
+    <!-- Tailwind CSS CDN for modern, utility-first styling -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts -->
+    <!-- Google Fonts for a clean, professional look -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <!-- Font Awesome for Icons -->
+    <!-- Font Awesome for a wide range of icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <!-- Swiper.js for sliders -->
+    <!-- Swiper.js for smooth, responsive sliders -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <style>
+        /* Custom CSS variables for consistent colors */
         :root {
             --harvest-green: #00A300;
             --sprout-green: #5CB85C;
@@ -28,13 +29,14 @@
             color: #333;
         }
 
-        /* Custom gradient background on desktop */
+        /* Custom gradient background for the body on desktop */
         @media (min-width: 768px) {
             .bg-gradient-yellow {
                 background: linear-gradient(to bottom, #fff, #FFFBE6);
             }
         }
 
+        /* Box shadows for visual depth */
         .header-glow {
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
         }
@@ -43,12 +45,12 @@
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
         }
 
-        /* Swiper overrides for slider controls */
+        /* Overrides for Swiper.js navigation button colors */
         .swiper-button-prev, .swiper-button-next {
             color: var(--sprout-green) !important;
         }
 
-        /* Custom scrollbar for chat window */
+        /* Custom scrollbar styling for the chat window */
         .chat-messages::-webkit-scrollbar {
             width: 8px;
         }
@@ -62,12 +64,14 @@
             background-color: #f1f1f1;
         }
 
+        /* Hero section background image */
         .hero-section {
             background-image: url('https://placehold.co/1200x600/bbf7d0/ffffff?text=Grow+Smarter.+Harvest+Better.');
             background-size: cover;
             background-position: center;
         }
 
+        /* Fade-in animation for modals and new content */
         .fade-in {
             animation: fadeIn 0.5s ease-in-out;
         }
@@ -75,12 +79,31 @@
             from { opacity: 0; transform: translateY(10px); }
             to { opacity: 1; transform: translateY(0); }
         }
+
+        /* Pulsing animation for the AI chat button */
         .ai-chat-btn-pulse {
             animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
         }
         @keyframes pulse {
             0%, 100% { opacity: 1; }
             50% { opacity: .5; }
+        }
+
+        /* Spin wheel styles from new file */
+        canvas {
+            transition: transform 3s cubic-bezier(0.19, 1, 0.22, 1);
+        }
+        .arrow {
+            position: absolute;
+            width: 0;
+            height: 0;
+            border-left: 20px solid transparent;
+            border-right: 20px solid transparent;
+            border-top: 30px solid #d97706; /* Tailwind's amber-600 */
+            top: -10px; /* Adjust position */
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10;
         }
     </style>
 </head>
@@ -89,7 +112,7 @@
     <!-- Floating Header -->
     <header id="header" class="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-7xl">
         <nav class="flex items-center justify-between bg-white px-4 md:px-8 py-3 rounded-full header-glow transition-all duration-300">
-            <!-- Left Navigation -->
+            <!-- Left Navigation: Logo and Links -->
             <div class="flex items-center space-x-4 md:space-x-8">
                 <a href="#" id="logo-link" class="text-[var(--harvest-green)] font-bold text-lg md:text-2xl transition hover:text-[var(--sprout-green)]">Agri-Glow</a>
                 <ul class="hidden md:flex items-center space-x-6">
@@ -98,10 +121,11 @@
                     <li><a href="#seed-store" class="text-gray-600 hover:text-[var(--sprout-green)] font-medium transition duration-200">Seed Store</a></li>
                 </ul>
             </div>
-            <!-- Right Buttons -->
+            <!-- Right Buttons: Contact and Auth/Profile -->
             <div class="flex items-center space-x-4">
-                <a href="#contact" class="hidden sm:inline text-[var(--sprout-green)] font-medium hover:text-[var(--harvest-green)] transition duration-200">Contact Us</a>
-                <button id="get-started-btn" class="bg-[var(--harvest-green)] text-white font-semibold py-2 px-6 rounded-full hover:bg-[var(--sprout-green)] transition duration-300 hidden">Get Started</button>
+                <!-- "Contact Us" button now opens a modal -->
+                <button id="contact-btn" class="hidden sm:inline text-[var(--sprout-green)] font-medium hover:text-[var(--harvest-green)] transition duration-200">Contact Us</button>
+                <button id="get-started-btn" class="bg-[var(--harvest-green)] text-white font-semibold py-2 px-6 rounded-full hover:bg-[var(--sprout-green)] transition duration-300">Get Started</button>
                 <div id="profile-btn" class="relative group hidden items-center space-x-2 cursor-pointer">
                     <img id="profile-image-thumb" src="https://placehold.co/40x40/ccc/fff" alt="Profile" class="w-10 h-10 rounded-full object-cover border-2 border-gray-300 group-hover:border-[var(--sprout-green)] transition">
                     <span id="profile-name" class="hidden md:inline text-gray-700 font-medium"></span>
@@ -129,9 +153,9 @@
             <h2 class="text-3xl font-bold text-center mb-10">Popular Crops</h2>
             <div class="swiper popular-swiper">
                 <div class="swiper-wrapper">
-                    <!-- Cards will be dynamically inserted here -->
+                    <!-- Cards for popular crops will be dynamically inserted here by JavaScript -->
                 </div>
-                <!-- Add Navigation -->
+                <!-- Swiper Navigation Arrows -->
                 <div class="swiper-button-next"></div>
                 <div class="swiper-button-prev"></div>
             </div>
@@ -142,9 +166,9 @@
             <h2 class="text-3xl font-bold text-center mb-10">Seed Store</h2>
             <div class="swiper seed-swiper">
                 <div class="swiper-wrapper">
-                    <!-- Cards will be dynamically inserted here -->
+                    <!-- Cards for seeds will be dynamically inserted here by JavaScript -->
                 </div>
-                <!-- Add Navigation -->
+                <!-- Swiper Navigation Arrows -->
                 <div class="swiper-button-next"></div>
                 <div class="swiper-button-prev"></div>
             </div>
@@ -210,20 +234,59 @@
         </div>
     </div>
 
+    <!-- Contact Form Modal (Hidden by default) -->
+    <div id="contact-modal" class="hidden fixed inset-0 z-50 bg-gray-900 bg-opacity-70 flex items-center justify-center p-4 fade-in">
+        <div class="bg-white p-8 md:p-12 rounded-3xl w-full max-w-md card-shadow relative">
+            <button id="close-contact" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 transition"><i class="fas fa-times"></i></button>
+            <h2 class="text-3xl font-bold mb-6 text-center text-[var(--harvest-green)]">Contact Us</h2>
+            <form id="contact-form-el">
+                <div class="mb-4">
+                    <label for="contact-name" class="block text-gray-700 font-medium mb-2">Name</label>
+                    <input type="text" id="contact-name" class="w-full px-4 py-3 rounded-full bg-gray-100 border border-gray-300 focus:ring-2 focus:ring-[var(--sprout-green)] focus:border-transparent transition" required>
+                </div>
+                <div class="mb-4">
+                    <label for="contact-email" class="block text-gray-700 font-medium mb-2">Email</label>
+                    <input type="email" id="contact-email" class="w-full px-4 py-3 rounded-full bg-gray-100 border border-gray-300 focus:ring-2 focus:ring-[var(--sprout-green)] focus:border-transparent transition" required>
+                </div>
+                <div class="mb-4">
+                    <label for="contact-subject" class="block text-gray-700 font-medium mb-2">Subject</label>
+                    <input type="text" id="contact-subject" class="w-full px-4 py-3 rounded-full bg-gray-100 border border-gray-300 focus:ring-2 focus:ring-[var(--sprout-green)] focus:border-transparent transition" required>
+                </div>
+                <div class="mb-6">
+                    <label for="contact-message" class="block text-gray-700 font-medium mb-2">Message</label>
+                    <textarea id="contact-message" class="w-full px-4 py-3 rounded-xl bg-gray-100 border border-gray-300 focus:ring-2 focus:ring-[var(--sprout-green)] focus:border-transparent transition" rows="5" required></textarea>
+                </div>
+                <button type="submit" class="w-full bg-[var(--harvest-green)] text-white font-semibold py-3 rounded-full hover:bg-[var(--sprout-green)] transition">Send Message</button>
+            </form>
+            <!-- Message box for contact form submission -->
+            <div id="contact-message-box" class="hidden mt-4 text-center p-4 rounded-xl bg-green-50 border-2 border-green-200">
+                <p class="text-green-700 font-bold">Your message has been sent successfully!</p>
+                <p class="text-sm text-gray-500 mt-1">We will get back to you shortly.</p>
+            </div>
+        </div>
+    </div>
+
     <!-- Crop Details View (Hidden by default) -->
     <div id="crop-details-view" class="hidden fixed inset-0 z-50 bg-gray-900 bg-opacity-70 flex items-center justify-center p-4 fade-in overflow-y-auto">
         <div class="bg-white p-8 md:p-12 rounded-3xl w-full max-w-5xl my-8 card-shadow relative">
             <button id="close-crop-details" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 transition"><i class="fas fa-times text-xl"></i></button>
             <div id="crop-details-content">
-                <!-- Content will be dynamically populated here -->
+                <!-- Content will be dynamically populated here by JavaScript -->
             </div>
         </div>
     </div>
 
-    <!-- Floating AI Assistant Button -->
-    <button id="ai-chat-btn" class="fixed bottom-6 right-6 z-40 w-16 h-16 rounded-full bg-[var(--sprout-green)] text-white text-2xl flex items-center justify-center shadow-lg hover:scale-110 transition-transform duration-300 ai-chat-btn-pulse">
-        <i class="fas fa-robot"></i>
-    </button>
+    <!-- Floating Buttons Container -->
+    <div class="fixed bottom-6 right-6 z-40 flex flex-col space-y-4">
+        <!-- Floating Lucky Spin Button -->
+        <button id="lucky-spin-btn" class="w-16 h-16 rounded-full bg-[var(--harvest-green)] text-white text-2xl flex items-center justify-center shadow-lg hover:scale-110 transition-transform duration-300">
+            <i class="fas fa-sack-dollar"></i>
+        </button>
+        <!-- Floating AI Assistant Button -->
+        <button id="ai-chat-btn" class="w-16 h-16 rounded-full bg-[var(--sprout-green)] text-white text-2xl flex items-center justify-center shadow-lg hover:scale-110 transition-transform duration-300 ai-chat-btn-pulse">
+            <i class="fas fa-robot"></i>
+        </button>
+    </div>
 
     <!-- AI Chat Window (Hidden by default) -->
     <div id="ai-chat-window" class="hidden fixed bottom-24 right-6 z-40 w-full max-w-sm h-96 bg-white rounded-xl shadow-2xl flex flex-col fade-in">
@@ -232,7 +295,7 @@
             <button id="close-chat" class="text-white hover:text-gray-200 transition"><i class="fas fa-times"></i></button>
         </div>
         <div id="chat-messages" class="chat-messages flex-1 overflow-y-auto p-4 space-y-4">
-            <!-- Chat messages will be dynamically added here -->
+            <!-- Initial AI greeting message -->
             <div class="flex">
                 <div class="bg-gray-200 p-3 rounded-lg max-w-[80%]">
                     <p>Hello! I'm Agri-Buddy, your AI crop expert. I can help with planting schedules, pest identification, care tips, and more. How can I assist you today?</p>
@@ -246,9 +309,27 @@
             </button>
         </div>
     </div>
+
+    <!-- Spin Wheel Modal (Hidden by default) -->
+    <div id="spin-wheel-modal" class="hidden fixed inset-0 z-50 bg-gray-900 bg-opacity-70 flex items-center justify-center p-4 fade-in">
+        <div class="bg-white p-8 rounded-3xl w-full max-w-md text-center card-shadow relative">
+            <button id="close-spin-wheel" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 transition"><i class="fas fa-times"></i></button>
+            <h2 class="text-3xl font-bold mb-6 text-[var(--harvest-green)]">Lucky Spin!</h2>
+            <div class="relative w-full aspect-square max-w-[400px] mx-auto">
+                <canvas id="wheel" class="rounded-full shadow-lg border-4 border-amber-600 bg-gray-800"></canvas>
+                <div class="arrow"></div>
+            </div>
+            <button id="spinBtn" class="bg-[var(--sprout-green)] text-white font-semibold py-3 px-8 mt-8 rounded-full hover:bg-[var(--harvest-green)] transition">Spin Now!</button>
+            <div id="reward-card" class="hidden mt-8 p-6 rounded-2xl bg-yellow-50 border-4 border-yellow-200 fade-in">
+                <p class="text-xl font-bold text-[var(--earth-brown)] mb-2">Congratulations!</p>
+                <p id="reward-message" class="text-2xl font-extrabold text-[var(--harvest-green)]"></p>
+                <p class="text-sm text-gray-500 mt-2">Check your profile for details on your reward.</p>
+            </div>
+        </div>
+    </div>
     
     <script>
-        // Data Simulation
+        // Data Simulation: This object acts as a simple database for the crops and seeds
         const data = {
             crops: [
                 { id: 'tomato', name: 'Tomato', description: 'A versatile fruit native to South America.', image: 'https://placehold.co/300x200/ff6b6b/fff?text=Tomato', season: 'Summer', location: 'Warm climates', marketPrice: '$1.50/lb', growingGuide: 'Tomatoes need plenty of sun and well-draining soil. Plant after the last frost. Water deeply and consistently.' },
@@ -268,15 +349,16 @@
             ]
         };
 
-        // UI State
+        // Application State Management
         const state = {
             isLoggedIn: false,
             currentPage: 'home',
             currentUser: null,
-            isChatOpen: false
+            isChatOpen: false,
+            isSpinWheelOpen: false,
         };
 
-        // DOM Element References
+        // Caching DOM elements to avoid repeated lookups
         const elements = {
             header: document.getElementById('header'),
             getStartedBtn: document.getElementById('get-started-btn'),
@@ -294,18 +376,32 @@
             aiChatWindow: document.getElementById('ai-chat-window'),
             chatMessages: document.getElementById('chat-messages'),
             chatInput: document.getElementById('chat-input'),
-            chatSendBtn: document.getElementById('chat-send-btn')
+            chatSendBtn: document.getElementById('chat-send-btn'),
+            luckySpinBtn: document.getElementById('lucky-spin-btn'),
+            spinWheelModal: document.getElementById('spin-wheel-modal'),
+            spinBtn: document.getElementById('spinBtn'),
+            spinWheelCanvas: document.getElementById('wheel'),
+            rewardCard: document.getElementById('reward-card'),
+            rewardMessage: document.getElementById('reward-message'),
+            // New cached elements for the contact form
+            contactBtn: document.getElementById('contact-btn'),
+            contactModal: document.getElementById('contact-modal'),
+            closeContactBtn: document.getElementById('close-contact'),
+            contactFormEl: document.getElementById('contact-form-el'),
+            contactMessageBox: document.getElementById('contact-message-box')
         };
 
-        // Function to render the home page content
+        // Renders the home page with dynamic content
         function renderHomePage() {
             state.currentPage = 'home';
             elements.mainContent.classList.remove('hidden');
             elements.signupForm.classList.add('hidden');
             elements.profileForm.classList.add('hidden');
+            elements.contactModal.classList.add('hidden');
             elements.cropDetailsView.classList.add('hidden');
             elements.aiChatBtn.classList.remove('hidden');
 
+            // Populate Popular Crops section
             const popularWrapper = document.querySelector('.popular-swiper .swiper-wrapper');
             popularWrapper.innerHTML = '';
             data.crops.forEach(crop => {
@@ -322,6 +418,7 @@
                 popularWrapper.innerHTML += card;
             });
 
+            // Populate Seed Store section
             const seedWrapper = document.querySelector('.seed-swiper .swiper-wrapper');
             seedWrapper.innerHTML = '';
             data.seeds.forEach(seed => {
@@ -338,6 +435,7 @@
                 seedWrapper.innerHTML += card;
             });
 
+            // Initialize the Swiper instances for both sliders
             new Swiper('.popular-swiper', {
                 slidesPerView: 1,
                 spaceBetween: 20,
@@ -365,7 +463,7 @@
             });
         }
 
-        // Function to render the crop details page
+        // Renders the crop details screen
         function renderCropDetails(cropId) {
             state.currentPage = 'details';
             const crop = data.crops.find(c => c.id === cropId);
@@ -374,11 +472,13 @@
                 return;
             }
 
+            // Check if seeds for this crop are available to show the "Buy Now" button
             const isSeedAvailable = data.seeds.some(seed => seed.name.toLowerCase().includes(crop.name.toLowerCase()));
             const buySeedBtn = isSeedAvailable ?
                 `<button class="w-full bg-[var(--harvest-green)] text-white font-semibold py-3 rounded-full hover:bg-[var(--sprout-green)] transition">Buy ${crop.name} Seeds Now</button>` :
                 `<p class="text-gray-500 text-center font-medium">Seeds for this crop are not currently available.</p>`;
 
+            // Dynamically build the HTML for the crop details
             const content = `
                 <div class="flex flex-col md:flex-row gap-8">
                     <div class="w-full md:w-1/2">
@@ -407,12 +507,13 @@
             elements.cropDetailsView.querySelector('#crop-details-content').innerHTML = content;
             elements.mainContent.classList.add('hidden');
             elements.signupForm.classList.add('hidden');
+            elements.contactModal.classList.add('hidden');
             elements.profileForm.classList.add('hidden');
             elements.cropDetailsView.classList.remove('hidden');
             elements.aiChatBtn.classList.remove('hidden');
         }
 
-        // Function to update the header based on login state
+        // Updates the header UI based on the user's login state
         function updateHeader() {
             if (state.isLoggedIn) {
                 elements.getStartedBtn.classList.add('hidden');
@@ -427,7 +528,7 @@
             }
         }
 
-        // Chatbot logic (simulated)
+        // Simulated Chatbot Logic
         function handleChatResponse(message) {
             const lowerMsg = message.toLowerCase();
             let response = "I'm still learning! Could you please rephrase that?";
@@ -445,12 +546,106 @@
             return response;
         }
 
-        // Main setup function to initialize event listeners
+        // Spin Wheel Logic
+        const segments = ['Free Coffee', 'Free Dessert', '20% Off', 'Spin Again', '30% Off', 'Free App', 'Buy 1 Get 1', 'Sorry!'];
+        const colors = ['#eab308', '#f59e0b', '#d97706', '#b45309', '#92400e', '#78350f', '#5e230c', '#422006']; // Tailwind amber hues
+        const segmentAngle = (2 * Math.PI) / segments.length;
+        let isSpinning = false;
+        let totalRotation = 0;
+        let ctx;
+        
+        function showMessage(text) {
+            elements.rewardMessage.textContent = text;
+            elements.rewardCard.classList.remove('hidden');
+            elements.rewardCard.classList.add('animate-bounce-in');
+            setTimeout(() => {
+                elements.rewardCard.classList.remove('animate-bounce-in');
+            }, 1000);
+        }
+
+        function drawRouletteWheel() {
+            const canvas = elements.spinWheelCanvas;
+            const wheelSize = 400;
+            canvas.width = wheelSize;
+            canvas.height = wheelSize;
+
+            if (!canvas.getContext) return;
+            ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.save();
+            ctx.translate(canvas.width / 2, canvas.height / 2);
+
+            segments.forEach((segment, i) => {
+                const startAngle = i * segmentAngle;
+                const endAngle = (i + 1) * segmentAngle;
+
+                ctx.beginPath();
+                ctx.arc(0, 0, wheelSize / 2, startAngle, endAngle);
+                ctx.lineTo(0, 0);
+                ctx.closePath();
+                ctx.fillStyle = colors[i % colors.length];
+                ctx.fill();
+
+                // Draw text
+                ctx.save();
+                ctx.rotate(startAngle + segmentAngle / 2);
+                ctx.fillStyle = 'white';
+                ctx.font = '600 16px Inter, sans-serif';
+                ctx.textAlign = 'center';
+                ctx.textBaseline = 'middle';
+                
+                // Position the text a bit away from the center
+                ctx.fillText(segment, wheelSize / 3, 0);
+                ctx.restore();
+            });
+
+            ctx.restore();
+        }
+
+        function getWinningSegment() {
+            const normalizedRotation = totalRotation % (2 * Math.PI);
+            const winningIndex = Math.floor((2 * Math.PI - normalizedRotation) / segmentAngle);
+            return segments[winningIndex];
+        }
+
+        function spinWheel() {
+            if (isSpinning) return;
+            isSpinning = true;
+            elements.rewardCard.classList.add('hidden');
+            
+            // Add a random number of extra rotations to make it unpredictable
+            const extraRotations = 5;
+            const finalRotationDegrees = (Math.random() * 360) + (360 * extraRotations);
+            const finalRotationRadians = finalRotationDegrees * (Math.PI / 180);
+            
+            // Set the final rotation for the wheel
+            // The negative sign makes it spin counter-clockwise
+            const finalCssRotation = -finalRotationDegrees;
+            elements.spinWheelCanvas.style.transform = `rotate(${finalCssRotation}deg)`;
+            
+            // Convert to radians for segment calculation
+            totalRotation = -finalRotationRadians;
+            
+            elements.spinBtn.disabled = true;
+            elements.spinBtn.textContent = "Spinning...";
+
+            setTimeout(() => {
+                isSpinning = false;
+                elements.spinBtn.disabled = false;
+                elements.spinBtn.textContent = "Spin Again?";
+                const winningSegment = getWinningSegment();
+                showMessage(`You won: ${winningSegment}!`);
+            }, 3100); // Match this with the CSS transition duration + a little extra
+        }
+
+        // Main setup function to initialize all event listeners
         function setupEventListeners() {
-            // Header button event listeners
+            // Event listener for the "Get Started" button
             elements.getStartedBtn.addEventListener('click', () => {
                 elements.signupForm.classList.remove('hidden');
             });
+
+            // Event listener for the profile button
             elements.profileBtn.addEventListener('click', () => {
                 // Populate profile form with current user data
                 document.getElementById('full-name').value = state.currentUser.name || '';
@@ -468,12 +663,18 @@
                 elements.profileForm.classList.remove('hidden');
             });
 
-            // Form closure buttons
+            // Event listeners to close the modals
             document.getElementById('close-signup').addEventListener('click', () => { elements.signupForm.classList.add('hidden'); });
             document.getElementById('close-profile').addEventListener('click', () => { elements.profileForm.classList.add('hidden'); });
             document.getElementById('close-crop-details').addEventListener('click', () => { renderHomePage(); });
+            document.getElementById('close-spin-wheel').addEventListener('click', () => { elements.spinWheelModal.classList.add('hidden'); });
+            // New event listener for the Contact Us modal
+            elements.closeContactBtn.addEventListener('click', () => { 
+                elements.contactModal.classList.add('hidden');
+            });
 
-            // Sign-up form submission
+
+            // Sign-up form submission logic
             elements.signupFormEl.addEventListener('submit', (e) => {
                 e.preventDefault();
                 const email = document.getElementById('email').value;
@@ -484,12 +685,13 @@
                     elements.signupError.classList.remove('hidden');
                     return;
                 }
+                // Simulate creating a new user object
                 state.currentUser = { email: email, name: '', image: '', address: '', preferences: [] };
                 elements.signupForm.classList.add('hidden');
                 elements.profileForm.classList.remove('hidden');
             });
 
-            // Profile form submission
+            // Profile form submission logic
             elements.profileFormEl.addEventListener('submit', (e) => {
                 e.preventDefault();
                 state.currentUser.name = document.getElementById('full-name').value;
@@ -498,10 +700,10 @@
                 state.isLoggedIn = true;
                 elements.profileForm.classList.add('hidden');
                 updateHeader();
-                renderHomePage(); // Go back to home screen
+                renderHomePage(); // Go back to the home screen
             });
 
-            // Profile image upload preview
+            // Event listener for profile image upload preview
             document.getElementById('profile-image-input').addEventListener('change', (e) => {
                 const file = e.target.files[0];
                 if (file) {
@@ -514,7 +716,7 @@
                 }
             });
 
-            // Preference button toggling
+            // Event listener for toggling crop preferences
             document.querySelectorAll('.pref-btn').forEach(btn => {
                 btn.addEventListener('click', () => {
                     const pref = btn.dataset.pref;
@@ -528,7 +730,7 @@
                 });
             });
 
-            // Dynamic crop details button
+            // Event listener for "View More" buttons on crop cards
             document.addEventListener('click', (e) => {
                 if (e.target.classList.contains('view-more-btn')) {
                     const cropId = e.target.dataset.id;
@@ -536,7 +738,7 @@
                 }
             });
 
-            // AI chat button event listeners
+            // Event listeners for the AI chat button
             elements.aiChatBtn.addEventListener('click', () => {
                 state.isChatOpen = !state.isChatOpen;
                 elements.aiChatWindow.classList.toggle('hidden', !state.isChatOpen);
@@ -548,17 +750,17 @@
                 elements.aiChatBtn.classList.remove('hidden');
             });
 
-            // Chat send button
+            // Chat send button and Enter key event listener
             elements.chatSendBtn.addEventListener('click', () => {
                 const message = elements.chatInput.value.trim();
                 if (message) {
-                    // Add user message
+                    // Add user message to the chat window
                     const userMessage = `<div class="flex justify-end"><div class="bg-[var(--sprout-green)] text-white p-3 rounded-lg max-w-[80%]">${message}</div></div>`;
                     elements.chatMessages.innerHTML += userMessage;
                     elements.chatInput.value = '';
                     elements.chatMessages.scrollTop = elements.chatMessages.scrollHeight;
 
-                    // Simulate AI response
+                    // Simulate AI response after a short delay
                     setTimeout(() => {
                         const aiResponse = handleChatResponse(message);
                         const aiMessage = `<div class="flex"><div class="bg-gray-200 p-3 rounded-lg max-w-[80%]">${aiResponse}</div></div>`;
@@ -573,12 +775,42 @@
                 }
             });
 
-            // Initial view setup
+            // Lucky Spin button listener
+            elements.luckySpinBtn.addEventListener('click', () => {
+                elements.spinWheelModal.classList.remove('hidden');
+                elements.rewardCard.classList.add('hidden');
+                drawRouletteWheel();
+            });
+
+            // Spin button listener
+            elements.spinBtn.addEventListener('click', spinWheel);
+
+            // Contact Us button listener to show the modal
+            elements.contactBtn.addEventListener('click', () => {
+                elements.contactModal.classList.remove('hidden');
+                elements.contactFormEl.classList.remove('hidden');
+                elements.contactMessageBox.classList.add('hidden');
+            });
+
+            // Contact form submission listener
+            elements.contactFormEl.addEventListener('submit', (e) => {
+                e.preventDefault();
+                // Simulate form submission success
+                elements.contactFormEl.classList.add('hidden');
+                elements.contactMessageBox.classList.remove('hidden');
+                // You could reset the form fields here if needed
+                setTimeout(() => {
+                    elements.contactModal.classList.add('hidden');
+                }, 3000); // Automatically hide after 3 seconds
+            });
+
+
+            // Initial setup when the page loads
             updateHeader();
             renderHomePage();
         }
 
-        // Run the setup when the window loads
+        // Run the main setup function when the window loads
         window.onload = setupEventListeners;
     </script>
 </body>
