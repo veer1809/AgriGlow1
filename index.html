@@ -547,8 +547,9 @@
         }
 
         // Spin Wheel Logic
-        const segments = ['Free Coffee', 'Free Dessert', '20% Off', 'Spin Again', '30% Off', 'Free App', 'Buy 1 Get 1', 'Sorry!'];
-        const colors = ['#eab308', '#f59e0b', '#d97706', '#b45309', '#92400e', '#78350f', '#5e230c', '#422006']; // Tailwind amber hues
+        // Updated segments with crop-related rewards
+        const segments = ['Free Seed Packet', 'Gardening Gloves', 'Miniature Trowel Set', '10% Off All Fertilizers', 'Free 3-Month Membership', 'Gardening E-Book', 'Sorry!', 'Free Heirloom Tomato Seeds'];
+        const colors = ['#00A300', '#5CB85C', '#84CC16', '#A3E635', '#DCFCE7', '#22C55E', '#D97706', '#EF4444']; // More earthy/green colors
         const segmentAngle = (2 * Math.PI) / segments.length;
         let isSpinning = false;
         let totalRotation = 0;
