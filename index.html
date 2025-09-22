@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agri-Glow: Grow Smarter. Harvest Better.</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Swiper.js for sliders -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <style>
+        :root {
+            --harvest-green: #00A300;
+            --sprout-green: #5CB85C;
+            --earth-brown: #B8860B;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #fff;
+            color: #333;
+        }
+
+        /* Custom gradient background on desktop */
+        @media (min-width: 768px) {
+            .bg-gradient-yellow {
+                background: linear-gradient(to bottom, #fff, #FFFBE6);
+            }
+        }
+
+        .header-glow {
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+        }
+
+        .card-shadow {
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+        }
+
+        /* Swiper overrides for slider controls */
+        .swiper-button-prev, .swiper-button-next {
+            color: var(--sprout-green) !important;
+        }
+
+        /* Custom scrollbar for chat window */
+        .chat-messages::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .chat-messages::-webkit-scrollbar-thumb {
+            background-color: #ccc;
+            border-radius: 4px;
+        }
+
+        .chat-messages::-webkit-scrollbar-track {
+            background-color: #f1f1f1;
+        }
+
+        .hero-section {
+            background-image: url('https://placehold.co/1200x600/bbf7d0/ffffff?text=Grow+Smarter.+Harvest+Better.');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .ai-chat-btn-pulse {
+            animation: pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: .5; }
+        }
+    </style>
+</head>
+<body class="bg-gradient-yellow min-h-screen">
+
+    <!-- Floating Header -->
+    <header id="header" class="fixed top-4 left-1/2 -translate-x-1/2 z-50 w-[95%] max-w-7xl">
+        <nav class="flex items-center justify-between bg-white px-4 md:px-8 py-3 rounded-full header-glow transition-all duration-300">
+            <!-- Left Navigation -->
+            <div class="flex items-center space-x-4 md:space-x-8">
+                <a href="#" id="logo-link" class="text-[var(--harvest-green)] font-bold text-lg md:text-2xl transition hover:text-[var(--sprout-green)]">Agri-Glow</a>
+                <ul class="hidden md:flex items-center space-x-6">
+                    <li><a href="#hero-section" class="text-gray-600 hover:text-[var(--sprout-green)] font-medium transition duration-200">Home</a></li>
+                    <li><a href="#popular-crops" class="text-gray-600 hover:text-[var(--sprout-green)] font-medium transition duration-200">All Crops</a></li>
+                    <li><a href="#seed-store" class="text-gray-600 hover:text-[var(--sprout-green)] font-medium transition duration-200">Seed Store</a></li>
+                </ul>
+            </div>
+            <!-- Right Buttons -->
+            <div class="flex items-center space-x-4">
+                <a href="#contact" class="hidden sm:inline text-[var(--sprout-green)] font-medium hover:text-[var(--harvest-green)] transition duration-200">Contact Us</a>
+                <button id="get-started-btn" class="bg-[var(--harvest-green)] text-white font-semibold py-2 px-6 rounded-full hover:bg-[var(--sprout-green)] transition duration-300 hidden">Get Started</button>
+                <div id="profile-btn" class="relative group hidden items-center space-x-2 cursor-pointer">
+                    <img id="profile-image-thumb" src="https://placehold.co/40x40/ccc/fff" alt="Profile" class="w-10 h-10 rounded-full object-cover border-2 border-gray-300 group-hover:border-[var(--sprout-green)] transition">
+                    <span id="profile-name" class="hidden md:inline text-gray-700 font-medium"></span>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Main Content Container -->
+    <div id="main-content" class="pt-24 pb-16">
+        <!-- Hero Section -->
+        <section id="hero-section" class="hero-section text-white text-center py-20 px-4 rounded-3xl mx-auto w-[95%] max-w-7xl card-shadow flex items-center justify-center">
+            <div class="bg-black bg-opacity-40 rounded-2xl p-6 md:p-10 w-full max-w-3xl">
+                <h1 class="text-4xl md:text-6xl font-extrabold mb-4 drop-shadow-lg">Grow Smarter. Harvest Better.</h1>
+                <p class="text-lg md:text-xl font-light mb-8 drop-shadow-lg">Your trusted guide to a bountiful garden.</p>
+                <div class="relative w-full">
+                    <input type="text" id="search-input" placeholder="Search by crop, location, or season..." class="w-full pl-12 pr-4 py-3 rounded-full text-gray-800 focus:outline-none focus:ring-2 focus:ring-[var(--sprout-green)] transition">
+                    <i class="fas fa-search absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"></i>
+                </div>
+            </div>
+        </section>
+
+        <!-- Popular Crops Section -->
+        <section id="popular-crops" class="py-16 px-4 md:px-8 mx-auto w-[95%] max-w-7xl">
+            <h2 class="text-3xl font-bold text-center mb-10">Popular Crops</h2>
+            <div class="swiper popular-swiper">
+                <div class="swiper-wrapper">
+                    <!-- Cards will be dynamically inserted here -->
+                </div>
+                <!-- Add Navigation -->
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+        </section>
+
+        <!-- Seed Store Section -->
+        <section id="seed-store" class="bg-[#FFFBE6] rounded-3xl py-16 px-4 md:px-8 mx-auto w-[95%] max-w-7xl card-shadow">
+            <h2 class="text-3xl font-bold text-center mb-10">Seed Store</h2>
+            <div class="swiper seed-swiper">
+                <div class="swiper-wrapper">
+                    <!-- Cards will be dynamically inserted here -->
+                </div>
+                <!-- Add Navigation -->
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Sign-up Form (Hidden by default) -->
+    <div id="signup-form" class="hidden fixed inset-0 z-50 bg-gray-900 bg-opacity-70 flex items-center justify-center p-4 fade-in">
+        <div class="bg-white p-8 md:p-12 rounded-3xl w-full max-w-md card-shadow relative">
+            <button id="close-signup" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 transition"><i class="fas fa-times"></i></button>
+            <h2 class="text-3xl font-bold mb-6 text-center text-[var(--harvest-green)]">Get Started</h2>
+            <p id="signup-error" class="text-sm text-red-500 mb-4 text-center hidden"></p>
+            <form id="signup-form-el">
+                <div class="mb-4">
+                    <label for="email" class="block text-gray-700 font-medium mb-2">Email</label>
+                    <input type="email" id="email" class="w-full px-4 py-3 rounded-full bg-gray-100 border border-gray-300 focus:ring-2 focus:ring-[var(--sprout-green)] focus:border-transparent transition" required>
+                </div>
+                <div class="mb-4">
+                    <label for="password" class="block text-gray-700 font-medium mb-2">Password</label>
+                    <input type="password" id="password" class="w-full px-4 py-3 rounded-full bg-gray-100 border border-gray-300 focus:ring-2 focus:ring-[var(--sprout-green)] focus:border-transparent transition" required>
+                </div>
+                <div class="mb-6">
+                    <label for="confirm-password" class="block text-gray-700 font-medium mb-2">Confirm Password</label>
+                    <input type="password" id="confirm-password" class="w-full px-4 py-3 rounded-full bg-gray-100 border border-gray-300 focus:ring-2 focus:ring-[var(--sprout-green)] focus:border-transparent transition" required>
+                </div>
+                <button type="submit" class="w-full bg-[var(--harvest-green)] text-white font-semibold py-3 rounded-full hover:bg-[var(--sprout-green)] transition">Create My Agri-Glow Account</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Profile Form (Hidden by default) -->
+    <div id="profile-form" class="hidden fixed inset-0 z-50 bg-gray-900 bg-opacity-70 flex items-center justify-center p-4 fade-in">
+        <div class="bg-white p-8 md:p-12 rounded-3xl w-full max-w-md card-shadow relative">
+            <button id="close-profile" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 transition"><i class="fas fa-times"></i></button>
+            <h2 class="text-3xl font-bold mb-6 text-center text-[var(--harvest-green)]">Create Your Profile</h2>
+            <form id="profile-form-el">
+                <div class="mb-4 text-center">
+                    <label for="profile-image-input" class="cursor-pointer">
+                        <img id="profile-image-preview" src="https://placehold.co/120x120/ccc/fff?text=Add+Image" alt="Profile Preview" class="w-32 h-32 rounded-full object-cover mx-auto mb-2 border-4 border-gray-200 hover:border-[var(--sprout-green)] transition">
+                        <span class="text-gray-500 text-sm">Click to upload</span>
+                    </label>
+                    <input type="file" id="profile-image-input" class="hidden" accept="image/*">
+                </div>
+                <div class="mb-4">
+                    <label for="full-name" class="block text-gray-700 font-medium mb-2">Full Name</label>
+                    <input type="text" id="full-name" class="w-full px-4 py-3 rounded-full bg-gray-100 border border-gray-300 focus:ring-2 focus:ring-[var(--sprout-green)] focus:border-transparent transition" required>
+                </div>
+                <div class="mb-4">
+                    <label for="address" class="block text-gray-700 font-medium mb-2">Address</label>
+                    <textarea id="address" class="w-full px-4 py-3 rounded-xl bg-gray-100 border border-gray-300 focus:ring-2 focus:ring-[var(--sprout-green)] focus:border-transparent transition" rows="3"></textarea>
+                </div>
+                <div class="mb-6">
+                    <label class="block text-gray-700 font-medium mb-2">Crop Preferences</label>
+                    <div id="preference-container" class="flex flex-wrap gap-2">
+                        <button type="button" data-pref="vegetables" class="pref-btn px-4 py-2 rounded-full text-gray-600 bg-gray-200 hover:bg-gray-300 transition">Vegetables</button>
+                        <button type="button" data-pref="fruits" class="pref-btn px-4 py-2 rounded-full text-gray-600 bg-gray-200 hover:bg-gray-300 transition">Fruits</button>
+                        <button type="button" data-pref="herbs" class="pref-btn px-4 py-2 rounded-full text-gray-600 bg-gray-200 hover:bg-gray-300 transition">Herbs</button>
+                        <button type="button" data-pref="grains" class="pref-btn px-4 py-2 rounded-full text-gray-600 bg-gray-200 hover:bg-gray-300 transition">Grains</button>
+                    </div>
+                </div>
+                <button type="submit" class="w-full bg-[var(--harvest-green)] text-white font-semibold py-3 rounded-full hover:bg-[var(--sprout-green)] transition">Save Profile</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Crop Details View (Hidden by default) -->
+    <div id="crop-details-view" class="hidden fixed inset-0 z-50 bg-gray-900 bg-opacity-70 flex items-center justify-center p-4 fade-in overflow-y-auto">
+        <div class="bg-white p-8 md:p-12 rounded-3xl w-full max-w-5xl my-8 card-shadow relative">
+            <button id="close-crop-details" class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 transition"><i class="fas fa-times text-xl"></i></button>
+            <div id="crop-details-content">
+                <!-- Content will be dynamically populated here -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Floating AI Assistant Button -->
+    <button id="ai-chat-btn" class="fixed bottom-6 right-6 z-40 w-16 h-16 rounded-full bg-[var(--sprout-green)] text-white text-2xl flex items-center justify-center shadow-lg hover:scale-110 transition-transform duration-300 ai-chat-btn-pulse">
+        <i class="fas fa-robot"></i>
+    </button>
+
+    <!-- AI Chat Window (Hidden by default) -->
+    <div id="ai-chat-window" class="hidden fixed bottom-24 right-6 z-40 w-full max-w-sm h-96 bg-white rounded-xl shadow-2xl flex flex-col fade-in">
+        <div class="bg-[var(--harvest-green)] text-white p-4 rounded-t-xl flex items-center justify-between">
+            <span class="font-bold text-lg">Agri-Buddy</span>
+            <button id="close-chat" class="text-white hover:text-gray-200 transition"><i class="fas fa-times"></i></button>
+        </div>
+        <div id="chat-messages" class="chat-messages flex-1 overflow-y-auto p-4 space-y-4">
+            <!-- Chat messages will be dynamically added here -->
+            <div class="flex">
+                <div class="bg-gray-200 p-3 rounded-lg max-w-[80%]">
+                    <p>Hello! I'm Agri-Buddy, your AI crop expert. I can help with planting schedules, pest identification, care tips, and more. How can I assist you today?</p>
+                </div>
+            </div>
+        </div>
+        <div class="p-4 border-t border-gray-200 flex items-center space-x-2">
+            <input type="text" id="chat-input" placeholder="Ask your question..." class="flex-1 px-4 py-2 rounded-full border border-gray-300 focus:ring-2 focus:ring-[var(--sprout-green)] focus:border-transparent transition">
+            <button id="chat-send-btn" class="bg-[var(--sprout-green)] text-white w-10 h-10 rounded-full flex items-center justify-center hover:bg-[var(--harvest-green)] transition">
+                <i class="fas fa-paper-plane"></i>
+            </button>
+        </div>
+    </div>
+    
+    <script>
+        // Data Simulation
+        const data = {
+            crops: [
+                { id: 'tomato', name: 'Tomato', description: 'A versatile fruit native to South America.', image: 'https://placehold.co/300x200/ff6b6b/fff?text=Tomato', season: 'Summer', location: 'Warm climates', marketPrice: '$1.50/lb', growingGuide: 'Tomatoes need plenty of sun and well-draining soil. Plant after the last frost. Water deeply and consistently.' },
+                { id: 'potato', name: 'Potato', description: 'A starchy root vegetable, a staple food worldwide.', image: 'https://placehold.co/300x200/bf543e/fff?text=Potato', season: 'Autumn', location: 'Cooler climates', marketPrice: '$0.80/lb', growingGuide: 'Plant potato seed pieces in rows. They thrive in loose, fertile soil. Harvest when the plant starts to yellow and die back.' },
+                { id: 'carrot', name: 'Carrot', description: 'A root vegetable, typically orange in color.', image: 'https://placehold.co/300x200/ef9539/fff?text=Carrot', season: 'Spring/Autumn', location: 'Temperate zones', marketPrice: '$1.20/bunch', growingGuide: 'Carrots prefer loose, sandy soil. Sow seeds thinly in rows. Keep the soil moist until seedlings emerge.' },
+                { id: 'corn', name: 'Corn', description: 'A large grain plant domesticated in ancient Mexico.', image: 'https://placehold.co/300x200/f8d844/fff?text=Corn', season: 'Summer', location: 'Warm, humid areas', marketPrice: '$2.00/lb', growingGuide: 'Plant corn in blocks rather than single rows to ensure proper pollination. Requires nitrogen-rich soil.' },
+                { id: 'cabbage', name: 'Cabbage', description: 'A leafy green or purple biennial plant.', image: 'https://placehold.co/300x200/a8e05a/fff?text=Cabbage', season: 'Spring/Autumn', location: 'Cool climates', marketPrice: '$1.00/head', growingGuide: 'Plant cabbage seedlings in rich, well-draining soil. Keep the soil consistently moist. Protect from common pests like cabbage worms.' },
+                { id: 'lettuce', name: 'Lettuce', description: 'A leafy vegetable often used in salads.', image: 'https://placehold.co/300x200/d4edda/fff?text=Lettuce', season: 'Spring', location: 'Cool climates', marketPrice: '$1.80/head', growingGuide: 'Lettuce grows best in cool weather. Plant seeds directly into the garden. Harvest outer leaves to allow the plant to continue growing.' },
+            ],
+            seeds: [
+                { name: 'Tomato Seeds', image: 'https://placehold.co/200x200/d7e0d3/333?text=Tomato+Seeds', season: 'Summer', place: 'Containers & Gardens' },
+                { name: 'Potato Sprout', image: 'https://placehold.co/200x200/d7e0d3/333?text=Potato+Sprout', season: 'Autumn', place: 'Field' },
+                { name: 'Carrot Seeds', image: 'https://placehold.co/200x200/d7e0d3/333?text=Carrot+Seeds', season: 'Spring/Autumn', place: 'Garden Beds' },
+                { name: 'Corn Seeds', image: 'https://placehold.co/200x200/d7e0d3/333?text=Corn+Seeds', season: 'Summer', place: 'Open Fields' },
+                { name: 'Cabbage Seeds', image: 'https://placehold.co/200x200/d7e0d3/333?text=Cabbage+Seeds', season: 'Spring/Autumn', place: 'Containers' },
+                { name: 'Lettuce Seeds', image: 'https://placehold.co/200x200/d7e0d3/333?text=Lettuce+Seeds', season: 'Spring', place: 'Garden Beds' },
+            ]
+        };
+
+        // UI State
+        const state = {
+            isLoggedIn: false,
+            currentPage: 'home',
+            currentUser: null,
+            isChatOpen: false
+        };
+
+        // DOM Element References
+        const elements = {
+            header: document.getElementById('header'),
+            getStartedBtn: document.getElementById('get-started-btn'),
+            profileBtn: document.getElementById('profile-btn'),
+            profileImageThumb: document.getElementById('profile-image-thumb'),
+            profileName: document.getElementById('profile-name'),
+            mainContent: document.getElementById('main-content'),
+            signupForm: document.getElementById('signup-form'),
+            profileForm: document.getElementById('profile-form'),
+            cropDetailsView: document.getElementById('crop-details-view'),
+            signupFormEl: document.getElementById('signup-form-el'),
+            profileFormEl: document.getElementById('profile-form-el'),
+            signupError: document.getElementById('signup-error'),
+            aiChatBtn: document.getElementById('ai-chat-btn'),
+            aiChatWindow: document.getElementById('ai-chat-window'),
+            chatMessages: document.getElementById('chat-messages'),
+            chatInput: document.getElementById('chat-input'),
+            chatSendBtn: document.getElementById('chat-send-btn')
+        };
+
+        // Function to render the home page content
+        function renderHomePage() {
+            state.currentPage = 'home';
+            elements.mainContent.classList.remove('hidden');
+            elements.signupForm.classList.add('hidden');
+            elements.profileForm.classList.add('hidden');
+            elements.cropDetailsView.classList.add('hidden');
+            elements.aiChatBtn.classList.remove('hidden');
+
+            const popularWrapper = document.querySelector('.popular-swiper .swiper-wrapper');
+            popularWrapper.innerHTML = '';
+            data.crops.forEach(crop => {
+                const card = `
+                    <div class="swiper-slide">
+                        <div class="bg-white p-6 rounded-2xl text-center card-shadow h-full flex flex-col items-center">
+                            <img src="${crop.image}" alt="${crop.name}" class="w-24 h-24 object-cover rounded-full mb-4">
+                            <h3 class="text-xl font-bold text-[var(--harvest-green)] mb-2">${crop.name}</h3>
+                            <p class="text-gray-600 text-sm flex-1 mb-4">${crop.description}</p>
+                            <button class="view-more-btn bg-[var(--sprout-green)] text-white py-2 px-6 rounded-full hover:bg-[var(--harvest-green)] transition" data-id="${crop.id}">View More</button>
+                        </div>
+                    </div>
+                `;
+                popularWrapper.innerHTML += card;
+            });
+
+            const seedWrapper = document.querySelector('.seed-swiper .swiper-wrapper');
+            seedWrapper.innerHTML = '';
+            data.seeds.forEach(seed => {
+                const card = `
+                    <div class="swiper-slide">
+                        <div class="bg-white p-6 rounded-2xl text-center card-shadow h-full flex flex-col items-center">
+                            <img src="${seed.image}" alt="${seed.name}" class="w-32 h-32 object-contain mb-4">
+                            <h3 class="text-xl font-bold text-[var(--harvest-green)] mb-2">${seed.name}</h3>
+                            <p class="text-sm text-gray-500 mb-4">${seed.season} | ${seed.place}</p>
+                            <button class="buy-now-btn bg-[var(--harvest-green)] text-white py-2 px-6 rounded-full hover:bg-[var(--sprout-green)] transition">Buy Now</button>
+                        </div>
+                    </div>
+                `;
+                seedWrapper.innerHTML += card;
+            });
+
+            new Swiper('.popular-swiper', {
+                slidesPerView: 1,
+                spaceBetween: 20,
+                navigation: {
+                    nextEl: '.popular-swiper .swiper-button-next',
+                    prevEl: '.popular-swiper .swiper-button-prev',
+                },
+                breakpoints: {
+                    640: { slidesPerView: 2 },
+                    1024: { slidesPerView: 4 }
+                }
+            });
+
+            new Swiper('.seed-swiper', {
+                slidesPerView: 1,
+                spaceBetween: 20,
+                navigation: {
+                    nextEl: '.seed-swiper .swiper-button-next',
+                    prevEl: '.seed-swiper .swiper-button-prev',
+                },
+                breakpoints: {
+                    640: { slidesPerView: 2 },
+                    1024: { slidesPerView: 4 }
+                }
+            });
+        }
+
+        // Function to render the crop details page
+        function renderCropDetails(cropId) {
+            state.currentPage = 'details';
+            const crop = data.crops.find(c => c.id === cropId);
+            if (!crop) {
+                console.error('Crop not found:', cropId);
+                return;
+            }
+
+            const isSeedAvailable = data.seeds.some(seed => seed.name.toLowerCase().includes(crop.name.toLowerCase()));
+            const buySeedBtn = isSeedAvailable ?
+                `<button class="w-full bg-[var(--harvest-green)] text-white font-semibold py-3 rounded-full hover:bg-[var(--sprout-green)] transition">Buy ${crop.name} Seeds Now</button>` :
+                `<p class="text-gray-500 text-center font-medium">Seeds for this crop are not currently available.</p>`;
+
+            const content = `
+                <div class="flex flex-col md:flex-row gap-8">
+                    <div class="w-full md:w-1/2">
+                        <img src="${crop.image}" alt="${crop.name}" class="w-full h-auto object-cover rounded-2xl mb-4">
+                        <!-- Simulated Image Gallery -->
+                        <div class="flex space-x-2 overflow-x-auto">
+                            <img src="${crop.image}" class="w-20 h-20 rounded-xl cursor-pointer hover:border-2 hover:border-[var(--sprout-green)] transition" alt="Thumb 1">
+                            <img src="https://placehold.co/100x100/f0f0f0/333?text=Growth+Stage" class="w-20 h-20 rounded-xl cursor-pointer hover:border-2 hover:border-[var(--sprout-green)] transition" alt="Thumb 2">
+                            <img src="https://placehold.co/100x100/f0f0f0/333?text=Harvest" class="w-20 h-20 rounded-xl cursor-pointer hover:border-2 hover:border-[var(--sprout-green)] transition" alt="Thumb 3">
+                        </div>
+                    </div>
+                    <div class="w-full md:w-1/2">
+                        <h2 class="text-4xl font-bold mb-2 text-[var(--harvest-green)]">${crop.name}</h2>
+                        <div class="flex flex-wrap gap-2 mb-4">
+                            <span class="bg-[var(--sprout-green)] text-white px-3 py-1 text-sm rounded-full">${crop.season}</span>
+                            <span class="bg-gray-200 text-gray-700 px-3 py-1 text-sm rounded-full">${crop.location}</span>
+                            <span class="bg-yellow-100 text-yellow-800 px-3 py-1 text-sm rounded-full">${crop.marketPrice}</span>
+                        </div>
+                        <p class="text-gray-600 mb-6">${crop.description}</p>
+                        <h3 class="text-2xl font-semibold mb-4 text-[var(--harvest-green)]">How to Grow & Care</h3>
+                        <p class="text-gray-700 leading-relaxed mb-6">${crop.growingGuide}</p>
+                        ${buySeedBtn}
+                    </div>
+                </div>
+            `;
+            elements.cropDetailsView.querySelector('#crop-details-content').innerHTML = content;
+            elements.mainContent.classList.add('hidden');
+            elements.signupForm.classList.add('hidden');
+            elements.profileForm.classList.add('hidden');
+            elements.cropDetailsView.classList.remove('hidden');
+            elements.aiChatBtn.classList.remove('hidden');
+        }
+
+        // Function to update the header based on login state
+        function updateHeader() {
+            if (state.isLoggedIn) {
+                elements.getStartedBtn.classList.add('hidden');
+                elements.profileBtn.classList.remove('hidden');
+                elements.profileName.textContent = state.currentUser.name;
+                if (state.currentUser.image) {
+                    elements.profileImageThumb.src = state.currentUser.image;
+                }
+            } else {
+                elements.getStartedBtn.classList.remove('hidden');
+                elements.profileBtn.classList.add('hidden');
+            }
+        }
+
+        // Chatbot logic (simulated)
+        function handleChatResponse(message) {
+            const lowerMsg = message.toLowerCase();
+            let response = "I'm still learning! Could you please rephrase that?";
+            if (lowerMsg.includes("pests") || lowerMsg.includes("bugs")) {
+                response = "To manage pests, try using a natural insecticide like neem oil or introducing beneficial insects like ladybugs.";
+            } else if (lowerMsg.includes("water") || lowerMsg.includes("watering")) {
+                response = "The best time to water plants is early in the morning. Ensure the soil is moist but not waterlogged.";
+            } else if (lowerMsg.includes("sunlight")) {
+                response = "Most vegetables need at least 6-8 hours of direct sunlight per day to thrive.";
+            } else if (lowerMsg.includes("hello") || lowerMsg.includes("hi")) {
+                response = "Hello there! How can I help you with your gardening today?";
+            } else if (lowerMsg.includes("seeds")) {
+                response = "You can find a wide variety of seeds in our Seed Store section. Just click on 'Seed Store' in the header.";
+            }
+            return response;
+        }
+
+        // Main setup function to initialize event listeners
+        function setupEventListeners() {
+            // Header button event listeners
+            elements.getStartedBtn.addEventListener('click', () => {
+                elements.signupForm.classList.remove('hidden');
+            });
+            elements.profileBtn.addEventListener('click', () => {
+                // Populate profile form with current user data
+                document.getElementById('full-name').value = state.currentUser.name || '';
+                document.getElementById('address').value = state.currentUser.address || '';
+                if (state.currentUser.image) {
+                    document.getElementById('profile-image-preview').src = state.currentUser.image;
+                }
+                document.querySelectorAll('.pref-btn').forEach(btn => {
+                    if (state.currentUser.preferences.includes(btn.dataset.pref)) {
+                        btn.classList.add('bg-[var(--sprout-green)]', 'text-white', 'hover:bg-[var(--harvest-green)]');
+                    } else {
+                        btn.classList.remove('bg-[var(--sprout-green)]', 'text-white', 'hover:bg-[var(--harvest-green)]');
+                    }
+                });
+                elements.profileForm.classList.remove('hidden');
+            });
+
+            // Form closure buttons
+            document.getElementById('close-signup').addEventListener('click', () => { elements.signupForm.classList.add('hidden'); });
+            document.getElementById('close-profile').addEventListener('click', () => { elements.profileForm.classList.add('hidden'); });
+            document.getElementById('close-crop-details').addEventListener('click', () => { renderHomePage(); });
+
+            // Sign-up form submission
+            elements.signupFormEl.addEventListener('submit', (e) => {
+                e.preventDefault();
+                const email = document.getElementById('email').value;
+                const password = document.getElementById('password').value;
+                const confirmPassword = document.getElementById('confirm-password').value;
+                if (password !== confirmPassword) {
+                    elements.signupError.textContent = "Passwords do not match.";
+                    elements.signupError.classList.remove('hidden');
+                    return;
+                }
+                state.currentUser = { email: email, name: '', image: '', address: '', preferences: [] };
+                elements.signupForm.classList.add('hidden');
+                elements.profileForm.classList.remove('hidden');
+            });
+
+            // Profile form submission
+            elements.profileFormEl.addEventListener('submit', (e) => {
+                e.preventDefault();
+                state.currentUser.name = document.getElementById('full-name').value;
+                state.currentUser.address = document.getElementById('address').value;
+                // Simulating successful profile creation and login
+                state.isLoggedIn = true;
+                elements.profileForm.classList.add('hidden');
+                updateHeader();
+                renderHomePage(); // Go back to home screen
+            });
+
+            // Profile image upload preview
+            document.getElementById('profile-image-input').addEventListener('change', (e) => {
+                const file = e.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = (e) => {
+                        document.getElementById('profile-image-preview').src = e.target.result;
+                        state.currentUser.image = e.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            // Preference button toggling
+            document.querySelectorAll('.pref-btn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const pref = btn.dataset.pref;
+                    if (btn.classList.contains('bg-[var(--sprout-green)]')) {
+                        btn.classList.remove('bg-[var(--sprout-green)]', 'text-white', 'hover:bg-[var(--harvest-green)]');
+                        state.currentUser.preferences = state.currentUser.preferences.filter(p => p !== pref);
+                    } else {
+                        btn.classList.add('bg-[var(--sprout-green)]', 'text-white', 'hover:bg-[var(--harvest-green)]');
+                        state.currentUser.preferences.push(pref);
+                    }
+                });
+            });
+
+            // Dynamic crop details button
+            document.addEventListener('click', (e) => {
+                if (e.target.classList.contains('view-more-btn')) {
+                    const cropId = e.target.dataset.id;
+                    renderCropDetails(cropId);
+                }
+            });
+
+            // AI chat button event listeners
+            elements.aiChatBtn.addEventListener('click', () => {
+                state.isChatOpen = !state.isChatOpen;
+                elements.aiChatWindow.classList.toggle('hidden', !state.isChatOpen);
+                elements.aiChatBtn.classList.toggle('ai-chat-btn-pulse', !state.isChatOpen);
+            });
+            document.getElementById('close-chat').addEventListener('click', () => {
+                state.isChatOpen = false;
+                elements.aiChatWindow.classList.add('hidden');
+                elements.aiChatBtn.classList.remove('hidden');
+            });
+
+            // Chat send button
+            elements.chatSendBtn.addEventListener('click', () => {
+                const message = elements.chatInput.value.trim();
+                if (message) {
+                    // Add user message
+                    const userMessage = `<div class="flex justify-end"><div class="bg-[var(--sprout-green)] text-white p-3 rounded-lg max-w-[80%]">${message}</div></div>`;
+                    elements.chatMessages.innerHTML += userMessage;
+                    elements.chatInput.value = '';
+                    elements.chatMessages.scrollTop = elements.chatMessages.scrollHeight;
+
+                    // Simulate AI response
+                    setTimeout(() => {
+                        const aiResponse = handleChatResponse(message);
+                        const aiMessage = `<div class="flex"><div class="bg-gray-200 p-3 rounded-lg max-w-[80%]">${aiResponse}</div></div>`;
+                        elements.chatMessages.innerHTML += aiMessage;
+                        elements.chatMessages.scrollTop = elements.chatMessages.scrollHeight;
+                    }, 1000);
+                }
+            });
+            elements.chatInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    elements.chatSendBtn.click();
+                }
+            });
+
+            // Initial view setup
+            updateHeader();
+            renderHomePage();
+        }
+
+        // Run the setup when the window loads
+        window.onload = setupEventListeners;
+    </script>
+</body>
+</html>
